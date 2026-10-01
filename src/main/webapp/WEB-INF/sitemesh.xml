@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <property name="decorators-file" value="/WEB-INF/decorators.xml"/>
+    <property name="config.clickstream.filter.sysprops" value="true"/>
+    
+    <!-- Loại trừ các tài nguyên tĩnh không cần xử lý decorator -->
+    <excludes path="/assets/*"/>
+    <excludes path="/uploads/*"/>
+    <excludes path="/static/*"/>
+    
+    <!-- Cấu hình parser cho trang HTML / JSP -->
+    <page-parsers>
+        <parser content-type="text/html" 
+                class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
+        <parser content-type="text/html;charset=UTF-8" 
+                class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
+    </page-parsers>
+
+    <!-- Quản lý mapper cho decorator -->
+    <decorator-mappers>
+        <decorator-mapper class="com.opensymphony.module.sitemesh.mapper.ConfigDecoratorMapper">
+            <param name="config" value="${decorators-file}"/>
+        </decorator-mapper>
+    </decorator-mappers>
+</sitemesh>

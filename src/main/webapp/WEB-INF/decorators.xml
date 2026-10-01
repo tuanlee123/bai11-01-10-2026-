@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/decorators">
+
+    <!-- 1. Loại trừ file tĩnh và các trang xác thực (Login, Register, OTP) -->
+    <excludes>
+        <!-- Static resources & ảnh -->
+        <pattern>/uploads/*</pattern>
+        <pattern>/assets/*</pattern>
+        <pattern>/static/*</pattern>
+        <pattern>*.css</pattern>
+        <pattern>*.js</pattern>
+        <pattern>*.jpg</pattern>
+        <pattern>*.png</pattern>
+        <pattern>*.jpeg</pattern>
+        <pattern>*.ico</pattern>
+        
+        <!-- Các trang độc lập không cần dính Header/Footer -->
+        <pattern>/login*</pattern>
+        <pattern>/register*</pattern>
+        <pattern>/verify-otp*</pattern>
+    </excludes>
+
+    <!-- 2. Layout dành riêng cho Quản trị viên (Admin Portal) -->
+    <decorator name="admin" page="admin.jsp">
+        <pattern>/admin/*</pattern>
+        <pattern>/admin*</pattern>
+    </decorator>
+
+    <!-- 3. Layout dành cho người dùng và các trang nội dung chính -->
+    <decorator name="web" page="web.jsp">
+        <pattern>/home*</pattern>
+        <pattern>/book-detail*</pattern>
+        <pattern>/*</pattern>
+    </decorator>
+
+</decorators>
