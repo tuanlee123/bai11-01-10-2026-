@@ -10,21 +10,28 @@
 <body class="bg-light py-4">
 
 <div class="container" style="max-width: 960px;">
-    <!-- Thanh điều hướng Header phía trên -->
+    <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
         <h4 class="text-primary mb-0 fw-bold">HỆ THỐNG BOOKSTORE - 24162138</h4>
         <div class="d-flex align-items-center">
             
-            <!-- NÚT GIỎ HÀNG THÊM VÀO ĐÂY -->
-            <a href="${pageContext.request.contextPath}/cart" class="btn btn-outline-success btn-sm me-3" style="text-decoration: none;">
+            <!-- Nút Giỏ hàng -->
+            <a href="${pageContext.request.contextPath}/cart" class="btn btn-outline-success btn-sm me-2" style="text-decoration: none;">
                 🛒 Giỏ hàng 
                 <c:if test="${not empty sessionScope.cart}">
                     <span class="badge bg-danger rounded-pill">${sessionScope.cart.size()}</span>
                 </c:if>
             </a>
 
+            <!-- Nút Đơn mua (chỉ hiển thị khi đã đăng nhập) -->
+            <c:if test="${not empty sessionScope.user}">
+                <a href="${pageContext.request.contextPath}/order-history" class="btn btn-outline-primary btn-sm me-3" style="text-decoration: none;">
+                    📦 Đơn mua
+                </a>
+            </c:if>
+
             <c:choose>
-                <c:when test="${sessionScope.user != null}">
+                <c:when test="${not empty sessionScope.user}">
                     <span class="me-2 text-secondary">Xin chào, <strong>${sessionScope.user.fullname}</strong></span>
                     <c:if test="${sessionScope.user.admin}">
                         <a href="${pageContext.request.contextPath}/admin/books" class="btn btn-sm btn-outline-warning me-2">Quản Trị Sách</a>
@@ -39,7 +46,7 @@
         </div>
     </div>
 
-    <!-- Chọn tác giả để xem sách -->
+    <!-- Chọn tác giả -->
     <div class="card mb-4 shadow-sm border-0">
         <div class="card-body d-flex align-items-center flex-wrap gap-2">
             <label class="fw-bold text-dark me-2">Chọn tác giả:</label>
@@ -52,7 +59,7 @@
         </div>
     </div>
 
-    <!-- Khung bảng hiển thị đúng định dạng Câu 3 -->
+    <!-- Bảng danh sách sách -->
     <div class="card shadow-sm border-0 overflow-hidden">
         <table class="table table-bordered text-center align-middle mb-0">
             <thead class="table-light">
@@ -65,7 +72,7 @@
             <tbody>
                 <c:choose>
                     <c:when test="${not empty books}">
-                        <!-- Dòng 1: cover_image -->
+                        <!-- Dòng ảnh -->
                         <tr style="height: 190px;">
                             <c:forEach items="${books}" var="b">
                                 <td style="width: 33.33%; vertical-align: middle; background-color: #fff;">
@@ -77,7 +84,6 @@
                                     </a>
                                 </td>
                             </c:forEach>
-                            <!-- Bù cột trống nếu trang có < 3 cuốn -->
                             <c:if test="${books.size() < 3}">
                                 <c:forEach begin="${books.size()}" end="2">
                                     <td style="width: 33.33%; background-color: #fbfbfb;"></td>
@@ -85,7 +91,7 @@
                             </c:if>
                         </tr>
 
-                        <!-- Dòng 2: Nội dung chi tiết các cuốn sách -->
+                        <!-- Dòng thông tin sách -->
                         <tr>
                             <c:forEach items="${books}" var="b">
                                 <td class="text-start p-3 align-top bg-white">
@@ -97,7 +103,6 @@
                                     <p class="mb-1"><strong>Quantity:</strong> ${b.quantity}</p>
                                     <p class="mb-1 text-danger"><strong>Review (${b.reviewCount})</strong></p>
                                     
-                                    <!-- NÚT THÊM VÀO GIỎ HÀNG NẰM TRỰC TIẾP Ở ĐÂY -->
                                     <form action="${pageContext.request.contextPath}/cart/add" method="post" class="mt-2">
                                         <input type="hidden" name="bookid" value="${b.bookid}">
                                         <button type="submit" class="btn btn-danger btn-sm w-100 fw-bold" ${b.quantity <= 0 ? 'disabled' : ''}>
@@ -106,7 +111,6 @@
                                     </form>
                                 </td>
                             </c:forEach>
-                            <!-- Bù cột trống nếu trang có < 3 cuốn -->
                             <c:if test="${books.size() < 3}">
                                 <c:forEach begin="${books.size()}" end="2">
                                     <td style="width: 33.33%; background-color: #fbfbfb;"></td>
@@ -121,7 +125,7 @@
                     </c:otherwise>
                 </c:choose>
 
-                <!-- Dòng 3: Thanh phân trang -->
+                <!-- Dòng phân trang -->
                 <tr class="table-light">
                     <td colspan="3" class="py-3">
                         <span class="me-2">

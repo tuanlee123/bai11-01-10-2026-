@@ -7,7 +7,6 @@
 
     <display-name>BookStore_24162138</display-name>
 
-    <!-- 1. Filter xử lý Tiếng Việt UTF-8 -->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
@@ -25,12 +24,10 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- 2. Trang mặc định khi truy cập root "/" -->
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
 
-    <!-- 3. Cấu hình timeout cho Session (15 phút) -->
     <session-config>
         <session-timeout>15</session-timeout>
     </session-config>

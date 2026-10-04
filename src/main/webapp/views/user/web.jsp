@@ -1,6 +1,7 @@
-<a href="${pageContext.request.contextPath}/cart" class="btn btn-outline-success me-3" style="text-decoration: none;">
-    🛒 Giỏ hàng 
-    <c:if test="${not empty sessionScope.cart}">
-        <span class="badge bg-danger rounded-pill">${sessionScope.cart.size()}</span>
-    </c:if>
-</a>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!-- ... -->
+<c:if test="${not empty sessionScope.cart}">
+    <span class="badge bg-danger rounded-pill">${fn:length(sessionScope.cart)}</span>
+</c:if>
